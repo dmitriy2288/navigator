@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Навигатор по техникуму</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Временные стили для отладки */
+        body { margin: 0; font-family: Arial, sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { background: #f0f0f0; padding: 20px; margin-bottom: 20px; }
+        .floor-selector { display: flex; gap: 10px; margin: 10px 0; }
+        .floor-btn { padding: 10px 15px; border: 1px solid #007bff; background: white; cursor: pointer; }
+        .floor-btn.active { background: #007bff; color: white; }
+        .map-container { display: grid; grid-template-columns: 1fr 300px; gap: 20px; min-height: 600px; }
+        #svg-container { border: 2px solid #ccc; background: white; display: flex; align-items: center; justify-content: center; }
+        .info-panel { background: #f8f9fa; padding: 20px; border: 1px solid #dee2e6; }
+        
+        /* Стили для SVG элементов */
+        .interactive-room { cursor: pointer; transition: all 0.3s; }
+        .interactive-room:hover { fill: #007bff !important; opacity: 0.8; }
+        .interactive-room.selected { fill: #28a745 !important; stroke: #1e7e34 !important; stroke-width: 2px; }
+        .room-type-classroom { fill: #e9ecef; stroke: #495057; }
+        .room-type-stairs { fill: #6c757d; stroke: #495057; }
+        .room-type-entrance { fill: #fd7e14; stroke: #e8590c; }
+        
+        .loading, .error { padding: 20px; text-align: center; font-size: 18px; }
+        .loading { color: #007bff; }
+        .error { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Навигатор по техникуму</h1>
+            <div class="controls">
+                <div class="floor-selector">
+                    <!-- Кнопки появятся через JS -->
+                </div>
+            </div>
+            <h2 id="floor-title">Первый этаж</h2>
+        </header>
+        
+        <main>
+            <div class="map-container">
+                <div id="svg-container">
+                    <div class="loading">Загрузка карты...</div>
+                </div>
+                <div id="room-info" class="info-panel">
+                    Выберите помещение на карте
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="navigator.js"></script>
+</body>
+</html>

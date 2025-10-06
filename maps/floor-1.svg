@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <!-- Стены -->
+    <rect x="50" y="50" width="700" height="500" fill="#f8f9fa" stroke="#495057" stroke-width="3"/>
+    
+    <!-- Коридор -->
+    <rect x="100" y="200" width="600" height="100" fill="#dee2e6" stroke="#adb5bd" stroke-width="1"/>
+    
+    <!-- Комнаты -->
+    <rect id="room-101" x="100" y="50" width="150" height="150" fill="#e9ecef" stroke="#495057" stroke-width="1"/>
+    <rect id="room-102" x="100" y="300" width="150" height="250" fill="#e9ecef" stroke="#495057" stroke-width="1"/>
+    <rect id="room-103" x="550" y="50" width="150" height="150" fill="#e9ecef" stroke="#495057" stroke-width="1"/>
+    <rect id="room-104" x="550" y="300" width="150" height="250" fill="#e9ecef" stroke="#495057" stroke-width="1"/>
+    
+    <!-- Лестница -->
+    <rect id="stairs-a" x="375" y="200" width="50" height="100" fill="#6c757d" stroke="#495057" stroke-width="1"/>
+    
+    <!-- Вход -->
+    <rect id="entrance-main" x="375" y="50" width="50" height="30" fill="#fd7e14" stroke="#e8590c" stroke-width="1"/>
+    
+    <!-- Подписи -->
+    <text x="175" y="135" text-anchor="middle" font-family="Arial" font-size="14">101</text>
+    <text x="175" y="425" text-anchor="middle" font-family="Arial" font-size="14">102</text>
+    <text x="625" y="135" text-anchor="middle" font-family="Arial" font-size="14">103</text>
+    <text x="625" y="425" text-anchor="middle" font-family="Arial" font-size="14">104</text>
+    <text x="400" y="255" text-anchor="middle" font-family="Arial" font-size="12" fill="white">A</text>
+</svg>
