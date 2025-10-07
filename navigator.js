@@ -23,21 +23,21 @@ class CollegeNavigator {
                 rooms: {
                     'room-101': { 
                         number: "101", 
-                        name: "Кабинет информатики", 
+                        name: "Кабинет", 
                         type: "classroom",
                         description: "Компьютерный класс, проектор",
                         capacity: "25 мест"
                     },
                     'room-102': { 
                         number: "102", 
-                        name: "Кабинет математики", 
+                        name: "Кабинет", 
                         type: "classroom",
-                        description: "Класс для занятий математикой",
-                        capacity: "30 мест"
+                        description: "Компьютерный класс, проектор",
+                        capacity: "25 мест"
                     },
-                    'stairs-a': { 
-                        number: "A", 
-                        name: "Лестница А", 
+                    'stairs-1': { 
+                        number: "1", 
+                        name: "Лестница 1", 
                         type: "stairs",
                         description: "Основная лестница между этажами"
                     },
@@ -53,19 +53,31 @@ class CollegeNavigator {
                 name: "Второй этаж",
                 svgFile: 'maps/floor-2.svg',
                 rooms: {
-                    'room-201': { 
-                        number: "201", 
-                        name: "Физическая лаборатория", 
-                        type: "lab",
-                        description: "Лаборатория для практических работ",
-                        capacity: "20 мест"
-                    },
-                    'room-202': { 
-                        number: "202", 
-                        name: "Кабинет истории", 
+                    'room-3.1': { 
+                        number: "3.1", 
+                        name: "Кабинет", 
                         type: "classroom",
-                        description: "Класс для гуманитарных дисциплин",
-                        capacity: "28 мест"
+                        description: "Компьютерный класс, проектор",
+                        capacity: "25 мест"
+                    },
+                    'room-3.2': { 
+                        number: "3.2", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "Компьютерный класс, проектор",
+                        capacity: "25 мест"
+                    },
+                    'stairs-1': { 
+                        number: "1", 
+                        name: "Лестница 1", 
+                        type: "stairs",
+                        description: "Основная лестница между этажами"
+                    },
+                    'entrance-main': { 
+                        number: "Главный", 
+                        name: "Главный вход", 
+                        type: "entrance",
+                        description: "Центральный вход в техникум"
                     }
                 }
             },
@@ -73,12 +85,31 @@ class CollegeNavigator {
                 name: "Третий этаж",
                 svgFile: 'maps/floor-3.svg',
                 rooms: {
-                    'room-301': { 
-                        number: "301", 
-                        name: "Актовый зал", 
-                        type: "auditorium",
-                        description: "Помещение для мероприятий и собраний",
-                        capacity: "100 мест"
+                    'room-3.1': { 
+                        number: "3.1", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "Компьютерный класс, проектор",
+                        capacity: "25 мест"
+                    },
+                    'room-3.2': { 
+                        number: "3.2", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "Компьютерный класс, проектор",
+                        capacity: "25 мест"
+                    },
+                    'stairs-1': { 
+                        number: "1", 
+                        name: "Лестница 1", 
+                        type: "stairs",
+                        description: "Основная лестница между этажами"
+                    },
+                    'entrance-main': { 
+                        number: "Главный", 
+                        name: "Главный вход", 
+                        type: "entrance",
+                        description: "Центральный вход в техникум"
                     }
                 }
             },
@@ -86,12 +117,31 @@ class CollegeNavigator {
                 name: "Четвертый этаж", 
                 svgFile: 'maps/floor-4.svg',
                 rooms: {
-                    'room-401': { 
-                        number: "401", 
-                        name: "Спортивный зал", 
-                        type: "gym",
-                        description: "Зал для занятий физкультурой",
-                        capacity: "50 мест"
+                    'room-3.1': { 
+                        number: "3.1", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "Компьютерный класс, проектор",
+                        capacity: "25 мест"
+                    },
+                    'room-3.2': { 
+                        number: "3.2", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "Компьютерный класс, проектор",
+                        capacity: "25 мест"
+                    },
+                    'stairs-1': { 
+                        number: "1", 
+                        name: "Лестница 1", 
+                        type: "stairs",
+                        description: "Основная лестница между этажами"
+                    },
+                    'entrance-main': { 
+                        number: "Главный", 
+                        name: "Главный вход", 
+                        type: "entrance",
+                        description: "Центральный вход в техникум"
                     }
                 }
             }

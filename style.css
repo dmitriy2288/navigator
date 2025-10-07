@@ -15,27 +15,50 @@ header {
     margin-bottom: 20px;
 }
 
-h1 {
-    color: red;
-}
-
 .container {
     max-width: 1200px; 
     margin: 0 auto; 
     padding: 20px; 
 }
 
+.controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.search-box input {
+    width: 150px;
+    height: 30px;
+    font-family: Arial;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+}
+
+.legend {
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    margin: 5px 0;
+    padding: 10px;
+}
+
+.legend-item {
+    margin: 10px 0;
+}
+
 .floor-selector { 
     display: flex; 
-    gap: 10px; 
-    margin: 10px 0; 
+    gap: 10px;  
 }
 
 .floor-btn { 
     padding: 10px 15px; 
-    border: 1px solid #007bff; 
+    border: 2px solid #007bff; 
     background: white; 
     cursor: pointer; 
+    border-radius: 5px;
 }
 
 .floor-btn.active { 
