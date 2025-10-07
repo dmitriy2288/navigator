@@ -85,8 +85,8 @@ class CollegeNavigator {
                 name: "Третий этаж",
                 svgFile: 'maps/floor-3.svg',
                 rooms: {
-                    'room-3.1': { 
-                        number: "3.1", 
+                    'room-3_1': { 
+                        number: "3_1", 
                         name: "Кабинет", 
                         type: "classroom",
                         description: "Компьютерный класс, проектор",
@@ -465,4 +465,5 @@ window.debugNavigator = {
     getCurrentFloor: () => window.collegeNavigator?.currentFloor,
     getSelectedRoom: () => window.collegeNavigator?.selectedElement?.id,
     showAllRooms: () => console.log(window.collegeNavigator?.floorsData)
+
 };
