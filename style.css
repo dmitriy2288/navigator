@@ -15,14 +15,14 @@ header {
     margin-bottom: 20px;
 }
 
+h1 {
+    color: red;
+}
+
 .container {
     max-width: 1200px; 
     margin: 0 auto; 
     padding: 20px; 
-}
-
-title {
-    color: red;
 }
 
 .floor-selector { 
@@ -108,5 +108,4 @@ title {
 
 .error { 
     color: #dc3545; 
-
 }
