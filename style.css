@@ -21,6 +21,10 @@ header {
     padding: 20px; 
 }
 
+title {
+    color: red;
+}
+
 .floor-selector { 
     display: flex; 
     gap: 10px; 
@@ -104,4 +108,5 @@ header {
 
 .error { 
     color: #dc3545; 
+
 }
