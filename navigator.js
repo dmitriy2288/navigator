@@ -1,9 +1,4 @@
-console.log('Скрипт загружен');
-
-// Проверка существования элементов
-console.log('SVG контейнер:', document.getElementById('svg-container'));
-console.log('Заголовок этажа:', document.getElementById('floor-title'));
-
+// Основной класс навигатора
 class CollegeNavigator {
     constructor() {
         this.currentFloor = 1;
@@ -11,37 +6,99 @@ class CollegeNavigator {
         this.init();
     }
 
+    // Инициализация приложения
     async init() {
-        console.log('Инициализация навигатора...');
         await this.loadFloorsData();
         this.createFloorSelector();
-        await this.loadFloor(1);
+        this.loadFloor(1);
         this.bindGlobalEvents();
-        console.log('Навигатор готов!');
     }
 
+    // Данные о помещениях (в реальном проекте можно загружать из JSON)
     async loadFloorsData() {
         this.floorsData = {
             1: {
                 name: "Первый этаж",
                 svgFile: 'maps/floor-1.svg',
                 rooms: {
-                    'room-101': { number: "101", name: "Кабинет информатики", type: "classroom" },
-                    'room-102': { number: "102", name: "Кабинет математики", type: "classroom" },
-                    'stairs-a': { number: "A", name: "Лестница А", type: "stairs" },
-                    'entrance-main': { number: "Главный", name: "Главный вход", type: "entrance" }
+                    'room-101': { 
+                        number: "101", 
+                        name: "Кабинет информатики", 
+                        type: "classroom",
+                        description: "Компьютерный класс, проектор",
+                        capacity: "25 мест"
+                    },
+                    'room-102': { 
+                        number: "102", 
+                        name: "Кабинет математики", 
+                        type: "classroom",
+                        description: "Класс для занятий математикой",
+                        capacity: "30 мест"
+                    },
+                    'stairs-a': { 
+                        number: "A", 
+                        name: "Лестница А", 
+                        type: "stairs",
+                        description: "Основная лестница между этажами"
+                    },
+                    'entrance-main': { 
+                        number: "Главный", 
+                        name: "Главный вход", 
+                        type: "entrance",
+                        description: "Центральный вход в техникум"
+                    }
                 }
             },
             2: {
-                name: "Второй этаж", 
+                name: "Второй этаж",
                 svgFile: 'maps/floor-2.svg',
                 rooms: {
-                    'room-201': { number: "201", name: "Физическая лаборатория", type: "lab" }
+                    'room-201': { 
+                        number: "201", 
+                        name: "Физическая лаборатория", 
+                        type: "lab",
+                        description: "Лаборатория для практических работ",
+                        capacity: "20 мест"
+                    },
+                    'room-202': { 
+                        number: "202", 
+                        name: "Кабинет истории", 
+                        type: "classroom",
+                        description: "Класс для гуманитарных дисциплин",
+                        capacity: "28 мест"
+                    }
+                }
+            },
+            3: {
+                name: "Третий этаж",
+                svgFile: 'maps/floor-3.svg',
+                rooms: {
+                    'room-301': { 
+                        number: "301", 
+                        name: "Актовый зал", 
+                        type: "auditorium",
+                        description: "Помещение для мероприятий и собраний",
+                        capacity: "100 мест"
+                    }
+                }
+            },
+            4: {
+                name: "Четвертый этаж", 
+                svgFile: 'maps/floor-4.svg',
+                rooms: {
+                    'room-401': { 
+                        number: "401", 
+                        name: "Спортивный зал", 
+                        type: "gym",
+                        description: "Зал для занятий физкультурой",
+                        capacity: "50 мест"
+                    }
                 }
             }
         };
     }
 
+    // Создание переключателя этажей
     createFloorSelector() {
         const selector = document.querySelector('.floor-selector');
         selector.innerHTML = '';
@@ -60,9 +117,11 @@ class CollegeNavigator {
         });
     }
 
+    // Переключение этажа
     async switchFloor(floorNumber) {
-        console.log(`Переключение на этаж ${floorNumber}`);
+        if (floorNumber === this.currentFloor) return;
         
+        // Обновляем активную кнопку
         document.querySelectorAll('.floor-btn').forEach(btn => {
             btn.classList.toggle('active', parseInt(btn.dataset.floor) === floorNumber);
         });
@@ -71,130 +130,289 @@ class CollegeNavigator {
         await this.loadFloor(floorNumber);
     }
 
+    // Загрузка SVG карты этажа
     async loadFloor(floorNumber) {
         const floorData = this.floorsData[floorNumber];
-        if (!floorData) {
-            this.showError(`Данные для этажа ${floorNumber} не найдены`);
-            return;
-        }
+        if (!floorData) return;
 
         try {
+            // Показываем загрузку
+            this.showLoading();
+            
+            // Обновляем заголовок
             document.getElementById('floor-title').textContent = floorData.name;
             
-            console.log(`Загружаем SVG: ${floorData.svgFile}`);
+            // Загружаем SVG
             const response = await fetch(floorData.svgFile);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
             const svgText = await response.text();
-            console.log('SVG загружен успешно');
             
             const container = document.getElementById('svg-container');
             container.innerHTML = svgText;
             
+            // Делаем SVG интерактивным
             this.makeSvgInteractive(floorNumber);
             
+            this.hideLoading();
+            
         } catch (error) {
-            console.error('Ошибка загрузки:', error);
-            this.showError(`Ошибка загрузки: ${error.message}`);
+            console.error('Ошибка загрузки карты:', error);
+            this.showError(`Не удалось загрузить карту ${floorNumber} этажа`);
         }
     }
 
+    // Делаем SVG элементы кликабельными
     makeSvgInteractive(floorNumber) {
         const svg = document.querySelector('#svg-container svg');
-        if (!svg) {
-            console.error('SVG элемент не найден в контейнере');
-            return;
-        }
+        if (!svg) return;
 
-        console.log('Делаем SVG интерактивным...');
         const floorData = this.floorsData[floorNumber];
         
-        // Делаем все элементы с ID кликабельными
-        const elements = svg.querySelectorAll('[id]');
-        console.log(`Найдено элементов с ID: ${elements.length}`);
+        // Обрабатываем все элементы с ID (комнаты, лестницы, входы)
+        const interactiveElements = svg.querySelectorAll('[id]');
         
-        elements.forEach(element => {
+        interactiveElements.forEach(element => {
             const elementId = element.id;
             const roomData = floorData.rooms[elementId];
             
             if (roomData) {
+                // Добавляем класс для стилизации
                 element.classList.add('interactive-room');
                 element.classList.add(`room-type-${roomData.type}`);
-                element.style.cursor = 'pointer';
                 
-                element.addEventListener('click', () => {
-                    this.showRoomInfo(roomData, element);
-                });
-                
-                element.addEventListener('mouseenter', () => {
-                    if (!element.classList.contains('selected')) {
-                        element.style.opacity = '0.8';
-                    }
-                });
-                
-                element.addEventListener('mouseleave', () => {
-                    if (!element.classList.contains('selected')) {
-                        element.style.opacity = '1';
-                    }
-                });
-                
-                console.log(`Добавлена интерактивность для: ${elementId}`);
+                // Добавляем обработчики событий
+                this.addRoomEventListeners(element, roomData, elementId);
             }
         });
     }
 
-    showRoomInfo(roomData, element) {
-        // Сброс предыдущего выделения
-        document.querySelectorAll('.interactive-room').forEach(el => {
-            el.classList.remove('selected');
-            el.style.opacity = '1';
+    // Добавляем обработчики событий для комнаты
+    addRoomEventListeners(element, roomData, elementId) {
+        // Клик - показать информацию
+        element.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.showRoomInfo(roomData, elementId, element);
         });
+
+        // Наведение - подсветка
+        element.addEventListener('mouseenter', (e) => {
+            if (!element.classList.contains('selected')) {
+                element.classList.add('hovered');
+            }
+        });
+
+        element.addEventListener('mouseleave', (e) => {
+            element.classList.remove('hovered');
+        });
+
+        // Добавляем title для тултипа
+        element.setAttribute('title', `${roomData.number} - ${roomData.name}`);
+    }
+
+    // Показать информацию о помещении
+    showRoomInfo(roomData, elementId, element) {
+        // Сбрасываем выделение
+        this.resetSelection();
         
-        // Выделение выбранного
+        // Выделяем выбранный элемент
         element.classList.add('selected');
-        element.style.opacity = '1';
         
-        // Обновление информационной панели
+        // Показываем информацию в панели
         const infoPanel = document.getElementById('room-info');
-        infoPanel.innerHTML = `
-            <h3>${roomData.number} - ${roomData.name}</h3>
-            <p><strong>Тип:</strong> ${this.getRoomTypeText(roomData.type)}</p>
-            <p><strong>Этаж:</strong> ${this.currentFloor}</p>
+        infoPanel.innerHTML = this.createRoomInfoHTML(roomData, elementId);
+        
+        // Показываем панель
+        infoPanel.classList.add('visible');
+        
+        // Сохраняем выбранный элемент
+        this.selectedElement = element;
+    }
+
+    // Создание HTML для информации о комнате
+    createRoomInfoHTML(roomData, elementId) {
+        const typeIcons = {
+            classroom: '🏫',
+            lab: '🔬', 
+            auditorium: '🎭',
+            gym: '⚽',
+            stairs: '🪜',
+            entrance: '🚪',
+            office: '💼'
+        };
+
+        const icon = typeIcons[roomData.type] || '📍';
+
+        return `
+            <div class="room-header">
+                <span class="room-icon">${icon}</span>
+                <h3>${roomData.number} - ${roomData.name}</h3>
+            </div>
+            <div class="room-details">
+                <div class="detail-item">
+                    <span class="detail-label">Тип:</span>
+                    <span class="detail-value">${this.getRoomTypeText(roomData.type)}</span>
+                </div>
+                ${roomData.capacity ? `
+                <div class="detail-item">
+                    <span class="detail-label">Вместимость:</span>
+                    <span class="detail-value">${roomData.capacity}</span>
+                </div>
+                ` : ''}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Описание:</span>
+                    <span class="detail-value">${roomData.description}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Этаж:</span>
+                    <span class="detail-value">${this.currentFloor}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">ID:</span>
+                    <span class="detail-value code">${elementId}</span>
+                </div>
+            </div>
         `;
     }
 
+    // Сброс выделения
+    resetSelection() {
+        if (this.selectedElement) {
+            this.selectedElement.classList.remove('selected');
+        }
+        document.querySelectorAll('.interactive-room').forEach(room => {
+            room.classList.remove('selected', 'hovered');
+        });
+        
+        document.getElementById('room-info').classList.remove('visible');
+    }
+
+    // Глобальные обработчики событий
+    bindGlobalEvents() {
+        // Клик вне комнаты - сброс выделения
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.interactive-room') && !e.target.closest('#room-info')) {
+                this.resetSelection();
+            }
+        });
+
+        // Клавиша Escape - сброс выделения
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.resetSelection();
+            }
+        });
+
+        // Поиск помещений
+        const searchInput = document.getElementById('room-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.handleSearch(e.target.value);
+            });
+        }
+    }
+
+    // Поиск помещений
+    handleSearch(query) {
+        if (!query.trim()) {
+            this.resetSearch();
+            return;
+        }
+
+        const currentFloorData = this.floorsData[this.currentFloor];
+        const results = [];
+
+        // Ищем совпадения
+        Object.entries(currentFloorData.rooms).forEach(([id, roomData]) => {
+            const searchText = `${roomData.number} ${roomData.name} ${roomData.type}`.toLowerCase();
+            if (searchText.includes(query.toLowerCase())) {
+                results.push({ id, roomData });
+            }
+        });
+
+        this.highlightSearchResults(results);
+    }
+
+    // Подсветка результатов поиска
+    highlightSearchResults(results) {
+        // Сбрасываем предыдущие результаты
+        this.resetSearch();
+        
+        results.forEach(result => {
+            const element = document.getElementById(result.id);
+            if (element) {
+                element.classList.add('search-result');
+            }
+        });
+
+        // Показываем первый результат
+        if (results.length > 0) {
+            const firstResult = results[0];
+            const element = document.getElementById(firstResult.id);
+            if (element) {
+                this.showRoomInfo(firstResult.roomData, firstResult.id, element);
+            }
+        }
+    }
+
+    // Сброс поиска
+    resetSearch() {
+        document.querySelectorAll('.search-result').forEach(el => {
+            el.classList.remove('search-result');
+        });
+    }
+
+    // Вспомогательные методы
     getRoomTypeText(type) {
         const types = {
             classroom: 'Учебный кабинет',
-            lab: 'Лаборатория', 
+            lab: 'Лаборатория',
+            auditorium: 'Актовый зал',
+            gym: 'Спортивный зал',
             stairs: 'Лестница',
-            entrance: 'Вход'
+            entrance: 'Вход',
+            office: 'Офис'
         };
         return types[type] || type;
+    }
+
+    showLoading() {
+        const container = document.getElementById('svg-container');
+        container.innerHTML = '<div class="loading">Загрузка карты...</div>';
+    }
+
+    hideLoading() {
+        // Автоматически скрывается при загрузке SVG
     }
 
     showError(message) {
         const container = document.getElementById('svg-container');
         container.innerHTML = `<div class="error">${message}</div>`;
     }
+}
 
-    bindGlobalEvents() {
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.interactive-room') && !e.target.closest('#room-info')) {
-                document.querySelectorAll('.interactive-room').forEach(el => {
-                    el.classList.remove('selected');
-                    el.style.opacity = '1';
-                });
-                document.getElementById('room-info').innerHTML = 'Выберите помещение на карте';
-            }
-        });
+// Дополнительные утилиты
+class NavigationUtils {
+    // Можно добавить сюда функции для будущей маршрутизации
+    static calculateRoute(fromRoom, toRoom) {
+        // Заглушка для будущей функциональности
+        console.log(`Построение маршрута из ${fromRoom} в ${toRoom}`);
     }
 }
 
-// Запуск при загрузке страницы
+// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
+    // Проверяем поддержку SVG
+    if (!document.createElementNS || !document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect) {
+        document.body.innerHTML = '<div class="error">Ваш браузер не поддерживает SVG. Пожалуйста, обновите браузер.</div>';
+        return;
+    }
+    
+    // Запускаем навигатор
     window.collegeNavigator = new CollegeNavigator();
 });
+
+// Глобальные функции для отладки
+window.debugNavigator = {
+    getCurrentFloor: () => window.collegeNavigator?.currentFloor,
+    getSelectedRoom: () => window.collegeNavigator?.selectedElement?.id,
+    showAllRooms: () => console.log(window.collegeNavigator?.floorsData)
+};
