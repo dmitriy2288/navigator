@@ -86,7 +86,7 @@ class CollegeNavigator {
                 svgFile: 'maps/floor-3.svg',
                 rooms: {
                     'room-3_1': { 
-                        number: "3_1", 
+                        number: "3.1", 
                         name: "Кабинет", 
                         type: "classroom",
                         description: "ОБЖ",
@@ -530,4 +530,5 @@ window.debugNavigator = {
     showAllRooms: () => console.log(window.collegeNavigator?.floorsData)
 
 };
+
 
