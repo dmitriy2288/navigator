@@ -89,21 +89,84 @@ class CollegeNavigator {
                         number: "3_1", 
                         name: "Кабинет", 
                         type: "classroom",
-                        description: "Компьютерный класс, проектор",
+                        description: "ОБЖ",
                         capacity: "25 мест"
                     },
-                    'room-3.2': { 
-                        number: "3.2", 
+                    'room-3_2': { 
+                        number: "3_2", 
                         name: "Кабинет", 
                         type: "classroom",
-                        description: "Компьютерный класс, проектор",
+                        description: "",
                         capacity: "25 мест"
                     },
-                    'stairs-1': { 
-                        number: "1", 
-                        name: "Лестница 1", 
+                    'room-3_3': { 
+                        number: "3_3", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "Математика",
+                        capacity: "25 мест"
+                    },
+                    'room-3_4': { 
+                        number: "3_4", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "",
+                        capacity: "25 мест"
+                    },
+                    'room-3_5': { 
+                        number: "3_5", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "Физика",
+                        capacity: "25 мест"
+                    },
+                    'room-3_6': { 
+                        number: "3_6", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "",
+                        capacity: "25 мест"
+                    },
+                    'room-3_7': { 
+                        number: "3_7", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "Кафедра воспитательного отдела",
+                        capacity: "25 мест"
+                    },
+                    'room-3_8': { 
+                        number: "3_8", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "",
+                        capacity: "25 мест"
+                    },
+                    'room-3_9': { 
+                        number: "3_9", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "",
+                        capacity: "25 мест"
+                    },
+                    'room-3_10': { 
+                        number: "3_10", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "",
+                        capacity: "25 мест"
+                    },
+                    'room-3_11': { 
+                        number: "3_11", 
+                        name: "Кабинет", 
+                        type: "classroom",
+                        description: "Кафедра воспитательного отдела",
+                        capacity: "25 мест"
+                    },
+                    'stairs': { 
+                        number: "", 
+                        name: "Лестница", 
                         type: "stairs",
-                        description: "Основная лестница между этажами"
+                        description: "Лестница между этажами"
                     },
                     'entrance-main': { 
                         number: "Главный", 
@@ -467,3 +530,4 @@ window.debugNavigator = {
     showAllRooms: () => console.log(window.collegeNavigator?.floorsData)
 
 };
+
